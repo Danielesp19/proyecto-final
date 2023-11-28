@@ -2,14 +2,15 @@ import pygame
 import sys
 import random
 from Pared import Pared
-from Objetivo import ghost
+from Objetivo import ghost,Cereza,Pastilla
 from Punto import PuntoAmarillo
+
 
 class Mapa:
     def __init__(self):
         self.vec_paredes = []
-        self.vec_puntos = []
         self.vec_obj = []
+        
 
     def selec_mapa(self,tipo,can_fantasmas,can_cerezas,can_pastas):
         
@@ -73,7 +74,7 @@ class Mapa:
                 mapa_lab[j][k]=3
                 cont+=1
             
-        """
+        
         cont2=0
         while cont2<=can_cerezas:
             j= random.randint(2,18)
@@ -89,7 +90,7 @@ class Mapa:
             if mapa_lab[j][k]==0:
                 mapa_lab[j][k]=5
                 cont3+=1
-        """
+        
         self.codificar_mapa(mapa_lab)
 
     #crea los objetos
@@ -103,20 +104,20 @@ class Mapa:
                 
                 if cell==0:
                     Punto=PuntoAmarillo(col_index * 30, row_index * 30)
-                    self.vec_puntos.append(Punto)
+                    self.vec_obj.append(Punto)
 
                 if cell == 3:
-                    ghosts = ghost(col_index * 30, row_index * 30, 30, 30)
-                    self.vec_obj.append(ghosts)
-                """"
+                    ghost1 = ghost(col_index * 30, row_index * 30, 26, 26)
+                    self.vec_obj.append(ghost1)
+                
                 if cell == 4:
-                    cerezas = ghost(col_index * 30, row_index * 30, 30, 30)
-                    self.vec_paredes.append(cerezas)
-
+                    cerezas = Cereza(col_index * 30, row_index * 30,27,28)
+                    self.vec_obj.append(cerezas)
+                
                 if cell == 5:
-                    ghosts = ghost(col_index * 30, row_index * 30, 30, 30)
-                    self.vec_paredes.append(ghosts)
-                """
+                    pasta = Pastilla(col_index * 30, row_index * 30, 30, 30)
+                    self.vec_obj.append(pasta)
+                
 
 
     def draw(self):
@@ -128,10 +129,10 @@ class Mapa:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+            
             for pared in self.vec_paredes:
                 pared.draw(ventana)
-            for puntos in self.vec_obj:
-                puntos.draw(ventana)
-            for ghost in self.vec_obj:
-                ghost.draw(ventana)
+            for Objetivos in self.vec_obj:
+                Objetivos.draw(ventana)
+            
             pygame.display.flip()

@@ -10,6 +10,7 @@ pygame.init()
 width, height = 730, 730
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Laberinto de Pac-Man")
+
 Jmapa=JTextArea(100,100,100,50)
 boton=Boton(200,200,50,50,"GO")
 # Crear un objeto Mapa
