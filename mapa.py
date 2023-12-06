@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import networkx as nx
 from Pared import Pared
 from Objetivo import ghost,Cereza,Pastilla
 from Punto import PuntoAmarillo
@@ -10,10 +11,9 @@ class Mapa:
     def __init__(self):
         self.vec_paredes = []
         self.vec_obj = []
+        self.grafo = nx.Graph()
         
-
     def selec_mapa(self,tipo,can_fantasmas,can_cerezas,can_pastas):
-        
         if tipo==1:
             mapa_lab = [
                 #1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20   21
@@ -92,6 +92,7 @@ class Mapa:
                 cont3+=1
         
         self.codificar_mapa(mapa_lab)
+        self.construir_grafo()
 
     #crea los objetos
     def codificar_mapa(self, mapa):
@@ -118,21 +119,46 @@ class Mapa:
                     pasta = Pastilla(col_index * 30, row_index * 30, 30, 30)
                     self.vec_obj.append(pasta)
                 
+    def construir_grafo(self):
+        for pared in self.vec_paredes:
+            # Agregar nodos para las paredes
+            self.grafo.add_node((pared.rect.x, pared.rect.y))
 
+        for objetivo in self.vec_obj:
+            # Agregar nodos para los objetivos
+            self.grafo.add_node((objetivo.rect.x, objetivo.rect.y))
+
+        # Conectar nodos adyacentes
+        for node in self.grafo.nodes:
+            x, y = node
+            vecinos = [(x + 30, y), (x - 30, y), (x, y + 30), (x, y - 30)]
+
+            for vecino in vecinos:
+                if vecino in self.grafo.nodes:
+                    distancia = ((x - vecino[0]) ** 2 + (y - vecino[1]) ** 2) ** 0.5
+                    self.grafo.add_edge(node, vecino, weight=distancia)
+
+    
 
     def draw(self):
+        inicio=(75,315)
+        fin=(265,315)
         pygame.init()
         ventana = pygame.display.set_mode((630, 630))
         pygame.display.set_caption("Nueva Ventana")
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            
+
             for pared in self.vec_paredes:
                 pared.draw(ventana)
-            for Objetivos in self.vec_obj:
-                Objetivos.draw(ventana)
+            
+            for objetivo in self.vec_obj:
+                objetivo.draw(ventana)
+
+            # Encontrar y dibujar el camino más corto
             
             pygame.display.flip()
