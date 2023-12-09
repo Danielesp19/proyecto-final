@@ -8,22 +8,25 @@ from Jlabel import JLabel
 pygame.init()
 
 # Configuración de la pantalla
-width, height = 730, 730
+width, height = 630, 630
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Laberinto de Pac-Man")
 
+imagen = pygame.image.load("C:\\Users\\Usuario\\Documents\\estructura de datos\\proyecto_final\\Captura de pantalla 2023-12-07 234908.png")
+imagen_rect = imagen.get_rect()
 
-Jmapa=JTextArea(400,175,100,50)
-JLabel1= JLabel(200,200,"cantidad de cerezas")
 
-Jmapa2=JTextArea(400,275,100,50)
-JLabel2= JLabel(200,300,"cantidad de fantasmas")
+Jmapa=JTextArea(380,175,100,50)
+JLabel1= JLabel(180,200,"cantidad de cerezas")
 
-Jmapa3=JTextArea(400,375,100,50)
-JLabel3= JLabel(200,400,"cantidad de pastas")
+Jmapa2=JTextArea(380,275,100,50)
+JLabel2= JLabel(180,300,"cantidad de fantasmas")
 
-boton=Boton(250,500,75,50,"Mapa 1")
-boton2=Boton(350,500,75,50,"Mapa 2")
+Jmapa3=JTextArea(380,375,100,50)
+JLabel3= JLabel(180,400,"cantidad de pastas")
+
+boton=Boton(230,500,75,50,"Mapa 1")
+boton2=Boton(330,500,75,50,"Mapa 2")
 # Crear un objeto Mapa
 mi_mapa = Mapa()
 bandera=False
@@ -48,10 +51,11 @@ while True:
         Jmapa3.handle_event(event)
     # Limpiar pantalla
     screen.fill((0, 0, 0))
-    boton.draw(screen,(0,50,200),(0,0,0))
+    screen.blit(imagen, imagen_rect)
+    boton.draw(screen,(200,50,20),(250,250,250))
     Jmapa.draw(screen)
     JLabel1.draw(screen)
-    boton2.draw(screen,(0,50,200),(0,0,0))
+    boton2.draw(screen,(200,50,20),(250,250,250))
     Jmapa2.draw(screen)
     JLabel2.draw(screen)
     

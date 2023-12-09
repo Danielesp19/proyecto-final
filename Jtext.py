@@ -15,7 +15,7 @@ class JTextArea:
         self.border_color = border_color
         self.border_width = border_width
         self.is_editing = False
-        self.text_entradas = []
+        self.text_entradas = [0]
 
     def draw(self, surface):
         # Dibuja el rectángulo de fondo

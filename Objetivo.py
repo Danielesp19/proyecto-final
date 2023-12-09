@@ -43,4 +43,16 @@ class Pastilla:
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
+class Pacman:
+    def __init__(self, x, y, ancho, alto):
+        super().__init__()
+        self.image = pygame.image.load("C:/Users/Usuario/Documents/estructura de datos/proyecto_final/Captura de pantalla 2023-12-09 024124.png")
+        self.image = pygame.transform.scale(self.image, (ancho, alto))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y-2
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+
 
