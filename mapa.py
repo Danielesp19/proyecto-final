@@ -211,7 +211,24 @@ class Mapa:
         self.all_paths = []
         self.find_all_paths(self.G, start, end)
         
-    
+    def prim(grafo, inicio):
+        arbol_expansion_minima = []
+        vertices_visitados = set([inicio])
+        aristas_disponibles = [(data['weight'], inicio, neighbor) for neighbor, data in grafo[inicio].items()]
+
+        heapq.heapify(aristas_disponibles)
+
+        while aristas_disponibles:
+            peso, vertice1, vertice2 = heapq.heappop(aristas_disponibles)
+
+            if vertice2 not in vertices_visitados:
+                vertices_visitados.add(vertice2)
+                arbol_expansion_minima.append((vertice1, vertice2, peso))
+
+                for neighbor, data in grafo[vertice2].items():
+                    heapq.heappush(aristas_disponibles, (data['weight'], vertice2, neighbor))
+
+        return arbol_expansion_minima
 
     def draw(self):
             pygame.init()
